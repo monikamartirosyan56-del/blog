@@ -1,0 +1,93 @@
+<?php
+
+class User {
+    public $name;
+    protected $passport;
+    protected $phone;
+    public $age;
+
+    public function __construct($name, $passport, $phone, $age) {
+        $this->name = $name;
+        $this->passport = $passport;
+        $this->phone = $phone;
+        $this->age = $age;
+    }
+
+    public function getPassport() {
+        return $this->passport;
+    }
+
+    public function getPhone() {
+        return $this->phone;
+    }
+}
+
+class Student extends User {
+    public $gpa;
+    public $faculty;
+    public $course;
+
+    public function __construct($name, $passport, $phone, $age, $gpa, $faculty, $course) {
+        parent::__construct($name, $passport, $phone, $age);
+        $this->gpa = $gpa;
+        $this->faculty = $faculty;
+        $this->course = $course;
+    }
+
+    public function getStudentInfo() {
+        return [
+            "name" => $this->name,
+            "passport" => $this->getPassport(),
+            "phone" => $this->getPhone(),
+            "age" => $this->age,
+            "gpa" => $this->gpa,
+            "faculty" => $this->faculty,
+            "course" => $this->course,
+        ];
+    }
+}
+
+
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <title>Student List</title>
+    <style>
+        body { font-family: Arial, sans-serif; background:#f4f4f4; padding:20px; }
+        table { width: 80%; margin: auto; border-collapse: collapse; background:white; }
+        th, td { border:1px solid #999; padding:10px; text-align:center; }
+        th { background:#444; color:white; }
+        h1 { text-align:center; }
+    </style>
+</head>
+<body>
+
+<h1>Ուսանողների տվյալները</h1>
+
+<table>
+    <tr>
+        <th>Անուն Ազգանուն</th>
+        <th>Անձնագիր</th>
+        <th>Հեռախոս</th>
+        <th>Տարիք</th>
+        <th>ՄՈԳ (GPA)</th>
+        <th>Ֆակուլտետ</th>
+        <th>Կուրս</th>
+    </tr>
+
+    
+    <tr>
+        <td><?= $info["name"] ?></td>
+        <td><?= $info["passport"] ?></td>
+        <td><?= $info["phone"] ?></td>
+        <td><?= $info["age"] ?></td>
+        <td><?= $info["gpa"] ?></td>
+        <td><?= $info["faculty"] ?></td>
+        <td><?= $info["course"] ?></td>
+    </tr>
+  
+</table>
+
+</body>
+</html>

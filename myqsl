@@ -1,0 +1,37 @@
+-- 1. Ստեղծել բազան
+CREATE DATABASE IF NOT EXISTS news_site 
+CHARACTER SET utf8mb4 
+COLLATE utf8mb4_unicode_ci;
+
+USE news_site;
+
+-- 2. Օգտատերերի աղյուսակ
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 3. Նորությունների աղյուսակ
+CREATE TABLE news (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(200) NOT NULL,
+    content TEXT NOT NULL,
+    author_id INT NOT NULL,
+    views INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 4. Օրինակ տվյալներ
+INSERT INTO users (username, email, password) VALUES 
+('admin', 'admin@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'), -- password: password
+('user1', 'user1@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'), -- password: password
+('user2', 'user2@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'); -- password: password
+
+INSERT INTO news (title, content, author_id) VALUES 
+('Բարի գալուստ մեր կայք', 'Սա մեր կայքի առաջին նորությունն է։ Բարի գալուստ բոլորին։', 1),
+('PHP ծրագրավորում', 'PHP-ն սերվերային ծրագրավորման լեզու է, որն օգտագործվում է վեբ զարգացման համար։', 2),
+('Նորություններ ամեն օր', 'Մենք ամեն օր կավելացնենք նոր և հետաքրքիր նորություններ։', 3);

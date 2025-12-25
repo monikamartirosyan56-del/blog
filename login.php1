@@ -1,0 +1,22 @@
+<?php
+session_start();
+require "../config/Database.php";
+require "../classes/User.php";
+
+$db = (new Database())->connect();
+$user = new User($db);
+
+if ($_POST) {
+    if ($user->login($_POST['username'], $_POST['password'])) {
+        header("Location: index.php");
+    } else {
+        echo "Սխալ տվյալներ";
+    }
+}
+?>
+
+<form method="post">
+    Username: <input name="username"><br>
+    Password: <input type="password" name="password"><br>
+    <button>Login</button>
+</form>
